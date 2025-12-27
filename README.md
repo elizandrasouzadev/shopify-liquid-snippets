@@ -20,7 +20,7 @@ Add a floating WhatsApp contact button to your store.
 {% render 'WhatsApp-Button' %}
 ```
 
-### 2. Events List – Horizontal Stripes (snippets/events-list.liquid)
+### 2. Events List – Horizontal Stripes (`snippets/events-list.liquid`)
 Display a list of upcoming events in a horizontal stripe layout.
 
 **Features:**
@@ -34,7 +34,7 @@ Display a list of upcoming events in a horizontal stripe layout.
 {% render 'events-list' %}
 ```
 
-### 3. Free Shipping Bar (snippets/free-shipping-bar.liquid)
+### 3. Free Shipping Bar (`snippets/free-shipping-bar.liquid`)
 
 Show a progress bar encouraging customers to reach the free shipping threshold.
 
@@ -50,7 +50,7 @@ Show a progress bar encouraging customers to reach the free shipping threshold.
 {% render 'free-shipping-bar' %}
 ```
 
-### 4. Live Event Embed (snippets/live-event.liquid)
+### 4. Live Event Embed (`snippets/live-event.liquid`)
 
 Embed a live event (e.g. Vimeo stream) with multilingual support and a newsletter reminder form.
 
@@ -66,7 +66,7 @@ Embed a live event (e.g. Vimeo stream) with multilingual support and a newslette
 {% render 'live-event' %}
 ```
 
-### 5. Product Upsell Card (snippets/product-upsell-card.liquid)
+### 5. Product Upsell Card (`snippets/product-upsell-card.liquid`)
 
 Suggest related products to increase average order value.
 
@@ -82,7 +82,7 @@ Suggest related products to increase average order value.
 {% render 'product-upsell-card' %}
 ```
 
-### 6. Promo Countdown Timer (snippets/promo-countdown-timer.liquid)
+### 6. Promo Countdown Timer (`snippets/promo-countdown-timer.liquid`)
 
 Create urgency with a countdown timer for promotions.
 
