@@ -16,7 +16,9 @@ Add a floating WhatsApp contact button to your store.
 - Easy to style with CSS.
 
 **Usage:**  
-`{% render 'WhatsApp-Button' %}`
+```liquid
+{% render 'WhatsApp-Button' %}
+```
 
 ### 2. Events List – Horizontal Stripes (snippets/events-list.liquid)
 Display a list of upcoming events in a horizontal stripe layout.
@@ -27,8 +29,10 @@ Display a list of upcoming events in a horizontal stripe layout.
 - Each row displays date and title in PT/EN
 - Responsive design with styled date pill and event title
 
-**Usage:**  
-`{% render 'events-list' %}`
+**Usage:** 
+```liquid
+{% render 'events-list' %}
+```
 
 ### 3. Free Shipping Bar (snippets/free-shipping-bar.liquid)
 
@@ -42,7 +46,9 @@ Show a progress bar encouraging customers to reach the free shipping threshold.
 - Responsive design
 
 **Usage:** 
-`{% render 'free-shipping-bar' %}`
+```liquid
+{% render 'free-shipping-bar' %}
+```
 
 ### 4. Live Event Embed (snippets/live-event.liquid)
 
@@ -56,7 +62,9 @@ Embed a live event (e.g. Vimeo stream) with multilingual support and a newslette
 - Responsive design
 
 **Usage:** 
-`{% render 'live-event' %}`
+```liquid
+{% render 'live-event' %}
+```
 
 ### 5. Product Upsell Card (snippets/product-upsell-card.liquid)
 
@@ -70,7 +78,9 @@ Suggest related products to increase average order value.
 - Call-to-action button with cart icon
 
 **Usage:** 
-`{% render 'product-upsell-card' %}`
+```liquid
+{% render 'product-upsell-card' %}
+```
 
 ### 6. Promo Countdown Timer (snippets/promo-countdown-timer.liquid)
 
@@ -83,8 +93,10 @@ Create urgency with a countdown timer for promotions.
 - Modern design with gradient background
 - Easy to reuse for multiple campaigns
 
-**Usage:** 
-`{% render 'promo-countdown-timer' %}`
+**Usage:**
+```liquid
+{% render 'promo-countdown-timer' %}
+```
 
 🛠 Notes
 
