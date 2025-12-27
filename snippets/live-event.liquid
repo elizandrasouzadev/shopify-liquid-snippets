@@ -1,0 +1,144 @@
+{%- assign is_br = false -%}
+{%- if localization.country.iso_code == 'BR' or request.locale.iso_code contains 'pt' -%}
+  {%- assign is_br = true -%}
+{%- endif -%}
+
+{%- assign INSTAGRAM_LOGO_URL = 'https://cdn.shopify.com/.../instagram.svg' -%}
+{%- assign BRAND_LOGO_URL     = 'https://cdn.shopify.com/.../brand-logo.svg' -%}
+
+{%- assign title_pt = 'EVENT_TITLE_PT' -%}
+{%- assign title_en = 'EVENT_TITLE_EN' -%}
+
+{%- assign desc_pt = 'EVENT_DESCRIPTION_PT' -%}
+{%- assign desc_en = 'EVENT_DESCRIPTION_EN' -%}
+
+{%- assign event_date_line_pt = 'EVENT_DATE_PT' -%}
+{%- assign event_date_line_en = 'EVENT_DATE_EN' -%}
+
+{%- assign details_pt = 'EVENT_DETAILS_PT' -%}
+{%- assign details_en = 'EVENT_DETAILS_EN' -%}
+
+{%- assign location_pt = 'https://example.com/live' -%}
+{%- assign location_en = 'https://example.com/live' -%}
+
+{%- if is_br -%}
+  {%- assign ui_kicker = 'PRÓXIMA LIVE' -%}
+  {%- assign ui_cta_btn = 'Receber lembrete' -%}
+  {%- assign ui_email_placeholder = 'Seu e-mail' -%}
+  {%- assign ui_email_hint = 'Avisaremos por e-mail quando a live começar.' -%}
+  {%- assign ui_sending = 'Enviando…' -%}
+  {%- assign ui_success = 'Pronto! Enviaremos o lembrete por e-mail.' -%}
+  {%- assign ui_error   = 'Confira seu e-mail e tente novamente.' -%}
+  {%- assign v_title   = title_pt -%}
+  {%- assign v_desc    = desc_pt -%}
+  {%- assign v_date    = event_date_line_pt -%}
+  {%- assign v_details = details_pt -%}
+  {%- assign v_location= location_pt -%}
+  {%- assign v_info    = 'INFO_TEXT_PT' -%}
+{%- else -%}
+  {%- assign ui_kicker = 'NEXT LIVE' -%}
+  {%- assign ui_cta_btn = 'Email Reminder' -%}
+  {%- assign ui_email_placeholder = 'Your email' -%}
+  {%- assign ui_email_hint = 'We’ll email you when the live starts.' -%}
+  {%- assign ui_sending = 'Sending…' -%}
+  {%- assign ui_success = 'Done! We’ll email your reminder.' -%}
+  {%- assign ui_error   = 'Please check your email and try again.' -%}
+  {%- assign v_title   = title_en -%}
+  {%- assign v_desc    = desc_en -%}
+  {%- assign v_date    = event_date_line_en -%}
+  {%- assign v_details = details_en -%}
+  {%- assign v_location= location_en -%}
+  {%- assign v_info    = 'INFO_TEXT_EN' -%}
+{%- endif -%}
+
+<style>
+  /* Styles omitted for brevity — keep your CSS here */
+</style>
+
+<div class="rx-wrap">
+  <div class="rx-embed">
+    <div class="rx-16x9">
+      <iframe 
+        src="https://vimeo.com/event/EXAMPLE_ID/embed/EXAMPLE_HASH/interaction"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <aside class="rx-right">
+    <div class="rx-logos">
+      <a href="https://instagram.com/EXAMPLE" target="_blank" rel="noopener">
+        <img src="{{ INSTAGRAM_LOGO_URL }}" alt="Instagram" height="30" loading="lazy" decoding="async">
+      </a>
+      <span class="rx-divider">|</span>
+      <a href="https://example.com" target="_blank" rel="noopener">
+        <img src="{{ BRAND_LOGO_URL }}" alt="Brand Logo" height="30" loading="lazy" decoding="async">
+      </a>
+    </div>
+
+    <div class="rx-kicker">{{ ui_kicker }}</div>
+    <h2 class="rx-title">{{ v_title }}</h2>
+    <p class="rx-desc">{{ v_desc }}</p>
+    <p class="rx-info">{{ v_info }}</p>
+
+    <div class="rx-date-btn-wrapper">
+      <div class="rx-date" aria-label="Date and time">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 2v3M17 2v3M3 9h18M5 7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{{ v_date }}</span>
+      </div>
+
+      <div class="rx-news-wrap">
+        {% form 'customer', id: 'rx-newsletter', novalidate: 'novalidate' %}
+          <input type="hidden" name="contact[tags]" value="newsletter, live-reminder">
+          <div class="rx-news-form">
+            <input class="rx-input" type="email" name="contact[email]" placeholder="{{ ui_email_placeholder }}" required aria-label="{{ ui_email_placeholder }}" autocomplete="email" inputmode="email">
+            <button class="rx-btn" type="submit" id="rx-submit">{{ ui_cta_btn }}</button>
+          </div>
+
+          {% if form.posted_successfully? %}
+            <div class="rx-alert rx-success" id="rx-alert" role="status" aria-live="polite">{{ ui_success }}</div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="rx-alert rx-error" id="rx-alert" role="status" aria-live="polite">{{ ui_error }}</div>
+          {% endif %}
+        {% endform %}
+
+        <div class="rx-hint">{{ ui_email_hint }}</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+  var form = document.getElementById('rx-newsletter');
+  var btn  = document.getElementById('rx-submit');
+  if(form && btn){
+    form.addEventListener('submit', function(){
+      btn.dataset.originalText = btn.textContent;
+      btn.textContent = {{ ui_sending | json }};
+      btn.setAttribute('disabled','disabled');
+      btn.setAttribute('aria-busy','true');
+    }, {passive:true});
+  }
+
+  function autoHideAlert(){
+    var alertEl = document.getElementById('rx-alert');
+    if(!alertEl) return;
+    var hide = function(){
+      alertEl.classList.add('is-hidden');
+      setTimeout(function(){ if(alertEl && alertEl.parentNode){ alertEl.parentNode.removeChild(alertEl); } }, 450);
+    };
+    var timer = setTimeout(hide, 7000);
+    alertEl.addEventListener('click', function(){ clearTimeout(timer); hide(); }, {once:true});
+  }
+  autoHideAlert();
+})();
+</script>
