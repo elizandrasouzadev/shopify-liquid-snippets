@@ -1,0 +1,19 @@
+{% assign free_shipping_threshold = 200 %}
+{% assign cart_total = cart.total_price | divided_by: 100 %}
+{% assign progress = cart_total | times: 100 | divided_by: free_shipping_threshold %}
+
+<div style="background:#f9f9f9;padding:12px;text-align:center;font-size:14px;font-family:Arial, sans-serif;">
+  {% if cart_total >= free_shipping_threshold %}
+    <span style="color:#2ecc71;font-weight:bold;">
+      🎉 Congratulations! You’ve unlocked <strong>FREE SHIPPING</strong>!
+    </span>
+  {% else %}
+    <span>
+      Spend <strong>{{ free_shipping_threshold | minus: cart_total | money }}</strong> more to unlock free shipping 🚚
+    </span>
+    <div style="background:#e0e0e0;height:10px;width:80%;margin:10px auto;border-radius:5px;overflow:hidden;">
+      <div style="background:#2ecc71;height:10px;width:{{ progress }}%;transition:width 0.3s ease;"></div>
+    </div>
+    <small style="color:#555;">Current cart total: {{ cart_total | money }}</small>
+  {% endif %}
+</div>
