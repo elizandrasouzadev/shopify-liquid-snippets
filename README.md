@@ -1,110 +1,71 @@
 # Shopify Snippets Library
 
-Reusable **Shopify Liquid snippets** for common store customizations. All examples use **placeholders** so you can adapt them safely without exposing client-specific data.
+Biblioteca de snippets Liquid reutilizáveis para customizações comuns em lojas Shopify. Todos os exemplos usam placeholders para que possam ser adaptados com segurança em qualquer projeto.
 
----
+## Snippets incluídos
 
-## 📂 Snippets Included
+### 1. Botão WhatsApp (`snippets/WhatsApp-Button.liquid`)
+Adiciona um botão flutuante de contato via WhatsApp na loja.
+- Botão redondo com ícone do WhatsApp
+- Número e mensagem customizáveis
+- Responsivo e fácil de estilizar com CSS
 
-### 1. WhatsApp Button (`snippets/WhatsApp-Button.liquid`)
-Add a floating WhatsApp contact button to your store.
-
-**Features:**
-- Round button with WhatsApp icon.
-- Customizable phone number and message.
-- Responsive floating button.
-- Easy to style with CSS.
-
-**Usage:**  
 ```liquid
 {% render 'WhatsApp-Button' %}
 ```
 
-### 2. Events List – Horizontal Stripes (`snippets/events-list.liquid`)
-Display a list of upcoming events in a horizontal stripe layout.
+### 2. Lista de Eventos — Listras Horizontais (`snippets/events-list.liquid`)
+Exibe uma lista de eventos futuros em layout de faixas horizontais.
+- Detecção de locale (BR e outros)
+- Exibe data e título em PT/EN conforme o idioma da loja
+- Design responsivo com pill de data estilizado
 
-**Features:**
-
-- Locale detection (BR vs others)
-- Each row displays date and title in PT/EN
-- Responsive design with styled date pill and event title
-
-**Usage:** 
 ```liquid
 {% render 'events-list' %}
 ```
 
-### 3. Free Shipping Bar (`snippets/free-shipping-bar.liquid`)
+### 3. Barra de Frete Grátis (`snippets/free-shipping-bar.liquid`)
+Mostra uma barra de progresso incentivando o cliente a atingir o valor mínimo para frete grátis.
+- Cálculo dinâmico baseado no total do carrinho
+- Threshold e mensagens customizáveis
+- Barra animada e responsiva
 
-Show a progress bar encouraging customers to reach the free shipping threshold.
-
-**Features:**
-
-- Dynamic calculation based on cart total
-- Customizable threshold and messages
-- Animated progress bar
-- Responsive design
-
-**Usage:** 
 ```liquid
 {% render 'free-shipping-bar' %}
 ```
 
-### 4. Live Event Embed (`snippets/live-event.liquid`)
+### 4. Embed de Evento ao Vivo (`snippets/live-event.liquid`)
+Incorpora um evento ao vivo (ex: stream no Vimeo) com suporte multilíngue e formulário de lembrete.
+- Detecção de locale (BR e outros)
+- Título, descrição, data e detalhes via placeholders
+- Integração com formulário de newsletter
 
-Embed a live event (e.g. Vimeo stream) with multilingual support and a newsletter reminder form.
-
-**Features:**
-
-- Locale detection (BR vs others)
-- Event title, description, date, and details using placeholders
-- Newsletter form integration
-- Responsive design
-
-**Usage:** 
 ```liquid
 {% render 'live-event' %}
 ```
 
-### 5. Product Upsell Card (`snippets/product-upsell-card.liquid`)
+### 5. Card de Upsell (`snippets/product-upsell-card.liquid`)
+Sugere produtos relacionados para aumentar o ticket médio.
+- Puxa dados do produto dinamicamente via handle
+- Exibe imagem, título e preço
+- Card estilizado com botão de adicionar ao carrinho
 
-Suggest related products to increase average order value.
-
-**Features:**
-
-- Pulls product data dynamically via handle
-- Displays product image, title, and price
-- Styled card with shadow and rounded corners
-- Call-to-action button with cart icon
-
-**Usage:** 
 ```liquid
 {% render 'product-upsell-card' %}
 ```
 
-### 6. Promo Countdown Timer (`snippets/promo-countdown-timer.liquid`)
+### 6. Contador Regressivo de Promoção (`snippets/promo-countdown-timer.liquid`)
+Cria urgência com um timer regressivo para campanhas promocionais.
+- Data de encerramento configurável
+- Countdown em tempo real (dias, horas, minutos, segundos)
+- Design moderno e fácil de reutilizar
 
-Create urgency with a countdown timer for promotions.
-
-**Features:**
-
-- Configurable end date
-- Real-time countdown (days, hours, minutes, seconds)
-- Modern design with gradient background
-- Easy to reuse for multiple campaigns
-
-**Usage:**
 ```liquid
 {% render 'promo-countdown-timer' %}
 ```
 
-🛠 Notes
+## Observações
+Todas as datas, títulos e links são placeholders — substitua pelos dados reais do seu projeto. Os snippets foram desenvolvidos para ser genéricos e reutilizáveis, podendo ser combinados em temas Shopify customizados.
 
-All dates, titles, and links are placeholders. Replace them with your actual project data.
-Snippets are designed to be generic and reusable.
-You can mix and match snippets to build custom Shopify themes.
-
-📜 License
-
-This repository is licensed under the MIT License. You are free to use, modify, and distribute these snippets in your own projects.
-
+## Licença
+MIT License — livre para usar, modificar e distribuir.
