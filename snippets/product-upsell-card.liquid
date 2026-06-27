@@ -1,22 +1,121 @@
-{% assign upsell_product_handle = 'sample-product' %}
-{% assign upsell_product = all_products[upsell_product_handle] %}
+{% assign upsell_product = all_products[section.settings.product_handle] %}
 
-{% if upsell_product %}
-<div style="border:1px solid #eee;border-radius:8px;padding:20px;margin:20px 0;
-     text-align:center;font-family:'Arial',sans-serif;box-shadow:0 4px 10px rgba(0,0,0,0.05);
-     transition:transform 0.2s ease;">
-  <h3 style="margin-bottom:15px;color:#333;">✨ Customers also bought:</h3>
-  <a href="{{ upsell_product.url }}" style="text-decoration:none;color:#333;display:block;">
-    <img src="{{ upsell_product.featured_image | img_url: 'medium' }}" 
-         alt="{{ upsell_product.title }}" 
-         style="max-width:180px;margin-bottom:15px;border-radius:6px;" />
-    <p style="font-weight:bold;font-size:16px;margin:5px 0;">{{ upsell_product.title }}</p>
-    <p style="color:#27ae60;font-size:15px;margin:5px 0;">{{ upsell_product.price | money }}</p>
-    <button style="background:#27ae60;color:#fff;padding:12px 24px;border:none;
-            border-radius:25px;cursor:pointer;font-weight:bold;
-            box-shadow:0 2px 6px rgba(0,0,0,0.2);">
-      🛒 Add to Cart
-    </button>
-  </a>
-</div>
+{% if upsell_product != blank %}
+  <div class="upsell-card">
+    <p class="upsell-label">{{ section.settings.label | default: '✨ Quem viu também comprou' }}</p>
+
+    <a href="{{ upsell_product.url }}" class="upsell-link">
+      {% if upsell_product.featured_image %}
+        <img
+          src="{{ upsell_product.featured_image | image_url: width: 360 }}"
+          alt="{{ upsell_product.featured_image.alt | escape }}"
+          class="upsell-img"
+          loading="lazy"
+          width="360"
+        />
+      {% endif %}
+      <p class="upsell-title">{{ upsell_product.title }}</p>
+      <p class="upsell-price">{{ upsell_product.price | money }}</p>
+    </a>
+
+    {% unless upsell_product.available == false %}
+      {%- comment -%} data-product-id usado para integrar com a Cart API via fetch {%- endcomment -%}
+      <button
+        class="upsell-btn"
+        data-product-id="{{ upsell_product.variants.first.id }}"
+      >
+        🛒 Adicionar ao carrinho
+      </button>
+    {% endunless %}
+  </div>
 {% endif %}
+
+<style>
+  .upsell-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-family: var(--font-body--family, Arial, sans-serif);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .upsell-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .upsell-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .upsell-img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 0.75rem;
+  }
+
+  .upsell-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+  }
+
+  .upsell-price {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .upsell-btn {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .upsell-btn:hover { opacity: 0.8; }
+</style>
+
+{% schema %}
+{
+  "name": "Card de Upsell",
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Handle do produto",
+      "default": "sample-product"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Texto acima do produto",
+      "default": "✨ Quem viu também comprou"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_unavailable",
+      "label": "Exibir mesmo sem estoque",
+      "default": false
+    }
+  ],
+  "presets": [
+    { "name": "Card de Upsell" }
+  ]
+}
+{% endschema %}
