@@ -1,19 +1,95 @@
-{% assign free_shipping_threshold = 200 %}
-{% assign cart_total = cart.total_price | divided_by: 100 %}
-{% assign progress = cart_total | times: 100 | divided_by: free_shipping_threshold %}
+{%- assign threshold = section.settings.threshold | times: 100 -%}
+{%- assign remaining = threshold | minus: cart.total_price -%}
+{%- assign raw_progress = cart.total_price | times: 100 | divided_by: threshold -%}
 
-<div style="background:#f9f9f9;padding:12px;text-align:center;font-size:14px;font-family:Arial, sans-serif;">
-  {% if cart_total >= free_shipping_threshold %}
-    <span style="color:#2ecc71;font-weight:bold;">
-      🎉 Congratulations! You’ve unlocked <strong>FREE SHIPPING</strong>!
-    </span>
-  {% else %}
-    <span>
-      Spend <strong>{{ free_shipping_threshold | minus: cart_total | money }}</strong> more to unlock free shipping 🚚
-    </span>
-    <div style="background:#e0e0e0;height:10px;width:80%;margin:10px auto;border-radius:5px;overflow:hidden;">
-      <div style="background:#2ecc71;height:10px;width:{{ progress }}%;transition:width 0.3s ease;"></div>
+{%- comment -%} garante que a barra não passa de 100% {%- endcomment -%}
+{%- if raw_progress > 100 -%}
+  {%- assign progress = 100 -%}
+{%- else -%}
+  {%- assign progress = raw_progress -%}
+{%- endif -%}
+
+<div class="free-ship-bar">
+  {%- if cart.total_price >= threshold -%}
+    <p class="free-ship-bar__msg free-ship-bar__msg--success">
+      🎉 {{ section.settings.msg_success | default: 'Você ganhou frete grátis!' }}
+    </p>
+  {%- else -%}
+    <p class="free-ship-bar__msg">
+      {{ section.settings.msg_before | default: 'Faltam' }}
+      <strong>{{ remaining | money }}</strong>
+      {{ section.settings.msg_after | default: 'para o frete grátis 🚚' }}
+    </p>
+    <div class="free-ship-bar__track">
+      <div class="free-ship-bar__fill" style="width: {{ progress }}%"></div>
     </div>
-    <small style="color:#555;">Current cart total: {{ cart_total | money }}</small>
-  {% endif %}
+  {%- endif -%}
 </div>
+
+<style>
+  .free-ship-bar {
+    background: #f9f9f9;
+    padding: 10px 16px;
+    text-align: center;
+    font-family: var(--font-body--family, Arial, sans-serif);
+    font-size: 0.875rem;
+  }
+
+  .free-ship-bar__msg { color: #333; }
+
+  .free-ship-bar__msg--success {
+    color: #2a7a3b;
+    font-weight: 600;
+  }
+
+  .free-ship-bar__track {
+    background: #e0e0e0;
+    height: 8px;
+    width: 80%;
+    margin: 8px auto 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .free-ship-bar__fill {
+    background: #2a7a3b;
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Barra de Frete Grátis",
+  "settings": [
+    {
+      "type": "number",
+      "id": "threshold",
+      "label": "Valor mínimo para frete grátis (R$)",
+      "default": 200
+    },
+    {
+      "type": "text",
+      "id": "msg_before",
+      "label": "Texto antes do valor",
+      "default": "Faltam"
+    },
+    {
+      "type": "text",
+      "id": "msg_after",
+      "label": "Texto depois do valor",
+      "default": "para o frete grátis 🚚"
+    },
+    {
+      "type": "text",
+      "id": "msg_success",
+      "label": "Mensagem de sucesso",
+      "default": "Você ganhou frete grátis! 🎉"
+    }
+  ],
+  "presets": [
+    { "name": "Barra de Frete Grátis" }
+  ]
+}
+{% endschema %}
